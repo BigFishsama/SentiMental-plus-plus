@@ -1,0 +1,3 @@
+/nlp_env/
+/huggingface_cache/
+*.pyc
