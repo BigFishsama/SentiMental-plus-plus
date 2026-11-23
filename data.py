@@ -37,14 +37,6 @@ tok=AutoTokenizer.from_pretrained("bert-base-chinese")
 def yencode(temp1):
     return tok(temp1["text"],padding="max_length",max_length=256,truncation=True)
 new_ds=ds.map(yencode,batched=True)
+new_ds=new_ds.rename_column("label","labels")
 
-new_ds.set_format(type="torch",columns=["input_ids","attention_mask","token_type_ids","label"])
-
-train_loader=DataLoader(new_ds["train"],batch_size=16,shuffle=True)
-
-# for batch in train_loader:
-#     print("batch keys:",batch.keys())
-#     print("input_ids shape:",batch["input_ids"].shape)      # (16, 128)
-#     print("attention_mask shape:",batch["attention_mask"].shape)
-#     print("label shape:",batch["label"].shape)              # (16,)
-#     break
+new_ds.save_to_disk("./data/chnsenti_encoded")
