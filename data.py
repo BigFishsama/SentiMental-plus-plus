@@ -40,3 +40,4 @@ new_ds=ds.map(yencode,batched=True)
 new_ds=new_ds.rename_column("label","labels")
 
 new_ds.save_to_disk("./data/chnsenti_encoded")
+tok.save_pretrained("./model/bert_senti")
