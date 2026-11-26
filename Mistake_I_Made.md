@@ -22,6 +22,8 @@
 > pip install datasets
 > ```
 
+</br>
+
 ### #0x02 .gitignore文件编码出错
 
 该项目第一次push的时候，发现莫名其妙的 **`.gitignore` 文件失效**。
@@ -35,6 +37,8 @@
 > 
 > #防止上传虚拟环境，huggingface缓存，以及py运行文件
 > ```
+
+</br>
 
 ### #0x03 git大文件传输错误
 
@@ -61,3 +65,21 @@
 > ```
 
 上述两个问题都是**由于没有提前规划好项目所需要的工具**，如果提前配置好追踪文件就不会有问题。
+
+</br>
+
+### #0x04 多组训练数据混淆
+
+由于在项目早期训练日志地址一直没改，调试过若干次导致后续图表生成混乱。
+
+![1](.\pictures\1.png)
+
+这个问题排查过程非常漫长，`batch.py`里有一堆调试代码。最后的处理方式是直接查找日期最接近的数据即可
+
+> ```python
+> event_files=glob.glob(os.path.join("./runs/sentiment","events.out.tfevents.*")) #找路径
+> latest_file=max(event_files,key=os.path.getmtime) #找日期最靠后的文件
+> 
+> ea=EventAccumulator(latest_file,size_guidance={"scalars":0})
+> ea.Reload()
+> ```

@@ -1,14 +1,14 @@
 from transformers import pipeline
 import torch
 
-model_path = "./model/bert_senti"
+model_path="./model/bert_senti"
 device=-1
 if torch.cuda.is_available():
     device=0
 
-sentiment_pipeline = pipeline("sentiment-analysis", model=model_path,tokenizer=model_path,device=device)
+sentiment_pipeline=pipeline("sentiment-analysis",model=model_path,tokenizer=model_path,device=device)
 
-texts=["这个游戏好玩","天气真差"]
+texts=["这个游戏好玩","天气真差","这个工具一点都不好用","虽然有点贵，但整体体验很棒"]  #这里添加文本
 results=sentiment_pipeline(texts)
 
 for text,result in zip(texts,results):
